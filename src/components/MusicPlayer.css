@@ -1,0 +1,327 @@
+/* ============================================================
+   The device casing (red, sketched)
+   ============================================================ */
+.playbox {
+  --fill: var(--case);
+  color: var(--ink);
+  width: min(440px, 100%);
+  padding: 20px 20px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transform: rotate(0.4deg);
+}
+
+/* ============================================================
+   The LCD screen — green glass set into the casing
+   ============================================================ */
+.screen {
+  --fill: var(--lcd);
+  position: relative;
+  padding: 4px;
+  border-radius: 5px;
+  /* inner shadow gives the "recessed glass" feel + a soft outer glow */
+  box-shadow:
+    inset 0 0 0 2px rgba(29, 42, 16, 0.25),
+    0 0 22px var(--lcd-glow);
+  overflow: hidden;
+}
+.screen::before {
+  border-width: 4px;
+}
+.screen__inner {
+  position: relative;
+  z-index: 1;
+  padding: 16px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* scanlines + faint diagonal screen glare */
+.screen__scan {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(29, 42, 16, 0.16) 0px,
+      rgba(29, 42, 16, 0.16) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.22), transparent 42%);
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+  animation: flicker 4.5s steps(60) infinite;
+}
+@keyframes flicker {
+  0%,
+  97%,
+  100% {
+    opacity: 0.7;
+  }
+  98% {
+    opacity: 0.55;
+  }
+}
+
+/* ---- screen header ---- */
+.screen__head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lcd-ink);
+  padding: 2px 0 6px;
+  border-bottom: 2px dashed var(--lcd-deep);
+}
+.star {
+  font-size: 0.55rem;
+}
+.screen__link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 2px dotted var(--lcd-deep);
+  padding-bottom: 1px;
+  transition: color 0.1s steps(2);
+}
+.screen__link:hover,
+.screen__link:focus-visible {
+  color: var(--lcd-dim);
+  border-bottom-color: var(--lcd-ink);
+  outline: none;
+}
+.screen__link:active {
+  color: var(--lcd-deep);
+}
+
+/* ============================================================
+   Track list (on the LCD)
+   ============================================================ */
+.tracklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.track {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2.6ch 1fr auto;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 0;
+  color: var(--lcd-ink);
+  text-align: left;
+  padding: 7px 8px;
+  transition: transform 0.1s steps(2);
+}
+.track:hover {
+  transform: translateX(2px);
+}
+
+.track__num {
+  font-family: var(--font-pixel);
+  font-size: 0.72rem;
+  color: var(--lcd-dim);
+  line-height: 1;
+}
+
+.track__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+.track__label {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--lcd-dim);
+  margin-bottom: 3px;
+}
+.track__name {
+  font-family: var(--font-lcd);
+  font-size: 1.5rem;
+  line-height: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track__icon {
+  display: inline-flex;
+  opacity: 0.7;
+}
+.track__icon svg {
+  width: 13px;
+  height: 13px;
+  fill: var(--lcd-ink);
+  shape-rendering: crispEdges;
+}
+
+/* active row = inverted LCD cell (dark glass, lit text) */
+.track--active {
+  color: var(--lcd-bright);
+}
+.track--active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--lcd-ink);
+  border: 2px solid var(--lcd-ink);
+  border-radius: 2px;
+  filter: url(#wobble);
+  z-index: -1;
+}
+.track--active .track__num {
+  color: var(--lcd-bright);
+}
+.track--active .track__label {
+  color: var(--lcd-deep);
+}
+.track--active .track__icon {
+  opacity: 1;
+}
+.track--active .track__icon svg {
+  fill: var(--lcd-bright);
+}
+
+/* little equalizer bars on the playing row */
+.bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 13px;
+}
+.bars i {
+  width: 3px;
+  height: 100%;
+  background: var(--lcd-bright);
+  transform-origin: bottom;
+  animation: eq 0.8s steps(3) infinite;
+}
+.bars i:nth-child(2) {
+  animation-delay: 0.16s;
+}
+.bars i:nth-child(3) {
+  animation-delay: 0.32s;
+}
+@keyframes eq {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* ============================================================
+   Scrubber (digital readout on the LCD)
+   ============================================================ */
+.scrub {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 4px;
+  padding: 6px 2px 0;
+  border-top: 2px dashed var(--lcd-deep);
+}
+.scrub__bar {
+  position: relative;
+  height: 12px;
+  border: 2px solid var(--lcd-ink);
+  border-radius: 1px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.scrub__fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--lcd-ink) 0 4px,
+    transparent 4px 6px
+  );
+  transition: width 0.2s steps(8);
+}
+.scrub__times {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-lcd);
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--lcd-ink);
+}
+
+/* ============================================================
+   Transport buttons (physical, on the casing)
+   ============================================================ */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 2px;
+}
+.ctrl {
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  transition: transform 0.1s steps(2);
+}
+.ctrl svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+.ctrl:hover {
+  transform: scale(1.1);
+}
+.ctrl:active {
+  transform: scale(0.9);
+}
+
+.ctrl--play {
+  --fill: var(--cream);
+  --shadow-x: 7px;
+  --shadow-y: 8px;
+  color: var(--ink);
+  width: 64px;
+  height: 64px;
+  border-radius: 4px;
+}
+.ctrl--play svg {
+  width: 26px;
+  height: 26px;
+  transform: translateX(1px);
+}
+.ctrl--play:hover {
+  transform: none;
+}
+.ctrl--play:active {
+  transform: translate(var(--shadow-x), var(--shadow-y)) scale(0.98);
+}
+

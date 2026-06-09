@@ -1,0 +1,22 @@
+[
+  {
+    "category": "App",
+    "name": "Sprachy — Every Translation, a Little Smarter",
+    "url": "https://sprachy.ai/",
+    "thumbnail": "/projects/sprachy-logo.svg",
+    "skills": [
+      "Deployed cloud infra — Cloudflare (DNS, proxy, frontend) + Railway (backend)",
+      "Configured email-based auth + Google OAuth (Supabase, AWS SES SMTP)",
+      "Built CI/CD for automated frontend & backend deploys",
+      "Integrated LLM + speech stack — OpenRouter / Gemini, Google & Edge TTS, AssemblyAI STT",
+      "Native iOS (Swift) · Supabase Postgres · Google Cloud Translate · AdMob"
+    ]
+  },
+  {
+    "category": "YouTube",
+    "name": "Visualizing the Perceptron Algorithm — Machine Learning Foundations",
+    "url": "https://www.youtube.com/watch?v=aIfP4kK3zn0&t=1s",
+    "thumbnail": "https://i.ytimg.com/vi/aIfP4kK3zn0/hqdefault.jpg",
+    "skills": ["Manim", "Videography"]
+  }
+]

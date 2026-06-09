@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.vite
+
+# local agent settings
+.claude/settings.local.json
+
+# TS build info
+*.tsbuildinfo

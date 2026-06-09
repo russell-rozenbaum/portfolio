@@ -1,0 +1,96 @@
+:root {
+  /* --- Hand-stamped riso palette --- */
+  --paper: #d9d7ce;       /* cool greige page */
+  --paper-deep: #cfccc1;  /* vignette / grain settle */
+  --case: #eaeff2;        /* device casing: white/cream, faintest blue hue */
+  --cream: #f4efe4;       /* warm panel fill */
+  --cream-line: #e6dfcf;
+  --ink: #16130f;         /* near-black */
+  --ink-soft: #4a443c;
+  --red: #db4a33;         /* vermillion (legacy, mostly retired) */
+  --red-deep: #b63a26;
+  --red-ink: #2a0f08;
+
+  /* --- accent: blue, matched to the LCD theme --- */
+  --accent: #3a7ba1;
+  --accent-bright: #5aa0c6;
+
+  --peach: #edb49d;       /* light peach — text-selection highlight */
+  --forest: #34603f;      /* top bar — sketched forest green */
+  --forest-deep: #244430;
+
+  /* --- retro LCD screen (light blue digital) --- */
+  --lcd: #a6cbdd;         /* screen glass */
+  --lcd-bright: #dcecf5;  /* highlight / lit text */
+  --lcd-deep: #6c97ac;    /* dim cells / scanline */
+  --lcd-ink: #112a3a;     /* dark pixels (text) */
+  --lcd-dim: #3f6378;     /* faded text */
+  --lcd-glow: rgba(150, 198, 222, 0.6);
+
+  --shadow-x: 11px;
+  --shadow-y: 12px;
+
+  --font-pixel: 'Press Start 2P', monospace;  /* tiny chunky labels */
+  --font-lcd: 'VT323', monospace;             /* readouts / titles / body */
+  --font-label: 'Oswald', sans-serif;
+  --font-mono: 'VT323', monospace;
+
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.5), transparent 60%),
+    radial-gradient(circle at 50% 120%, var(--paper-deep), transparent 55%);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+}
+
+/* Full-page film grain — a tiled raster-noise image blended over the page.
+   (Rendered from feTurbulence into a repeating PNG-like SVG tile, which is far
+   more reliable as a top overlay than applying an SVG filter to a live layer.) */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+::selection {
+  background: var(--peach);
+  color: var(--ink);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

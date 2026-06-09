@@ -1,0 +1,215 @@
+/* ============================================================
+   PDF block (clickable preview)
+   ============================================================ */
+.pdf-block {
+  --fill: var(--cream);
+  --shadow-x: 8px;
+  --shadow-y: 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: 260px;
+  padding: 0;
+  border: 0;
+  text-align: left;
+  border-radius: 3px;
+  transform: rotate(-0.6deg);
+  transition: transform 0.18s ease;
+}
+.pdf-block:hover {
+  transform: translateY(-3px) rotate(0deg);
+}
+.pdf-block__preview {
+  display: block;
+  padding: 10px 10px 0;
+}
+.pdf-block__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--ink);
+  border-radius: 1px;
+  background: #fff;
+}
+.pdf-block__cap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px 12px;
+}
+.pdf-block__kind {
+  font-family: var(--font-pixel);
+  font-size: 0.48rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.pdf-block__title {
+  font-family: var(--font-lcd);
+  font-size: 1.45rem;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.pdf-block__open {
+  margin-top: 4px;
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+/* compact icon trigger (used in the top bar) */
+.pdf-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+  opacity: 0.85;
+}
+.pdf-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+.pdf-icon:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   Modal
+   ============================================================ */
+.pdf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(14px, 3vw, 40px);
+  background: rgba(20, 24, 18, 0.62);
+  animation: pdf-fade 0.16s ease;
+}
+@keyframes pdf-fade {
+  from {
+    opacity: 0;
+  }
+}
+.pdf-modal__panel {
+  --fill: var(--cream);
+  --shadow-x: 9px;
+  --shadow-y: 10px;
+  width: min(920px, 100%);
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  padding: 6px; /* reveals the wobbly ::before border around the whole modal */
+}
+
+.pdf-modal__bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 2px dashed var(--ink-soft);
+}
+.pdf-modal__nav,
+.pdf-modal__zoom,
+.pdf-modal__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+}
+.pdf-btn--zoom {
+  min-width: 4.6ch;
+  justify-content: center;
+}
+.pdf-modal__pages {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+.pdf-modal__pageinput {
+  width: 3ch;
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  padding: 1px 2px;
+}
+.pdf-modal__pageinput:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.pdf-btn {
+  font-family: var(--font-label);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.82rem;
+  color: var(--ink);
+  background: transparent;
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  transition: transform 0.1s ease, background 0.12s ease, color 0.12s ease;
+}
+.pdf-btn:hover {
+  transform: translateY(-1px);
+}
+.pdf-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  transform: none;
+}
+.pdf-btn--download:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--cream);
+}
+
+.pdf-modal__body {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 0;
+  background: var(--paper-deep);
+}
+.pdf-modal__canvas {
+  display: block;
+  margin: 28px auto; /* centered when it fits; scrolls when zoomed in */
+  width: auto; /* exact size set inline by the renderer */
+  height: auto;
+  border: 2px solid var(--ink);
+  background: #fff;
+  box-shadow: 6px 7px 0 0 rgba(20, 24, 18, 0.25);
+}
+
+@media (max-width: 560px) {
+  .pdf-modal__bar {
+    flex-wrap: wrap;
+  }
+}

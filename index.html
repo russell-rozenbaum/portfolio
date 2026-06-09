@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/rose.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Russell Roze</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Oswald:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Hand-drawn wobble + grain filters, used across the app via filter: url(#...) -->
+    <svg
+      width="0"
+      height="0"
+      style="position: absolute; pointer-events: none"
+      aria-hidden="true"
+    >
+      <defs>
+        <filter id="wobble">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.014"
+            numOctaves="2"
+            seed="7"
+            result="noise"
+          />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" />
+        </filter>
+        <filter id="wobble-strong">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.02"
+            numOctaves="3"
+            seed="13"
+            result="noise"
+          />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" />
+        </filter>
+        <filter id="grain">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.9"
+            numOctaves="3"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+      </defs>
+    </svg>
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

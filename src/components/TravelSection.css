@@ -1,0 +1,124 @@
+/* ============================================================
+   Travel — vertical log, alternating image / caption sides.
+   Odd rows  (1st, 3rd, …): image left,  caption right.
+   Even rows (2nd, 4th, …): image right, caption left.
+   ============================================================ */
+.travel__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 52px);
+}
+
+.travel__row {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 4vw, 48px);
+}
+/* even rows mirror the layout (image moves to the right) */
+.travel__row:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+/* a gentle hand-placed tilt, alternating per row */
+.travel__row:nth-child(odd) .travel__frame {
+  transform: rotate(-0.7deg);
+}
+.travel__row:nth-child(even) .travel__frame {
+  transform: rotate(0.7deg);
+}
+
+/* framed photo (matte + wobbly border + offset shadow)
+   — no fixed aspect ratio: the frame sizes to each photo's own proportions */
+.travel__frame {
+  --shadow-x: 7px;
+  --shadow-y: 8px;
+  position: relative;
+  flex: 0 0 clamp(200px, 42%, 420px);
+  min-height: 64px; /* keeps room for the NO IMAGE placeholder */
+  padding: 6px;
+  border-radius: 3px;
+  transition: transform 0.18s ease;
+}
+.travel__frame:hover {
+  transform: translateY(-3px) rotate(0deg);
+}
+.travel__ph {
+  position: absolute;
+  inset: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent 0 8px,
+    rgba(22, 19, 15, 0.07) 8px 10px
+  );
+}
+.travel__frame img {
+  position: relative; /* in-flow, so the frame grows to the photo's height */
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 2px;
+  z-index: 1;
+  display: block;
+}
+.travel__frame img.is-missing {
+  opacity: 0; /* reveal the NO IMAGE placeholder */
+}
+
+/* caption — location over date, aligned toward the photo */
+.travel__cap {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.travel__row:nth-child(even) .travel__cap {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.travel__loc {
+  font-family: var(--font-lcd);
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  line-height: 1.1;
+  color: var(--ink);
+}
+.travel__date {
+  font-family: var(--font-label);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+/* stack on narrow screens — image always on top, text below */
+@media (max-width: 640px) {
+  .travel__row,
+  .travel__row:nth-child(even) {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+    gap: 12px;
+  }
+  .travel__row:nth-child(even) .travel__cap {
+    text-align: left;
+    align-items: flex-start;
+  }
+  .travel__frame {
+    flex-basis: auto;
+    width: 100%;
+  }
+}
