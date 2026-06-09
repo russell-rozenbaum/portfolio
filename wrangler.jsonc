@@ -1,0 +1,11 @@
+{
+  // Cloudflare Workers config for a static (assets-only) site.
+  // `npm run build` outputs to ./dist, which is served directly — no Worker script.
+  "name": "portfolio",
+  "compatibility_date": "2026-06-09",
+  "assets": {
+    "directory": "./dist",
+    // SPA: serve index.html for unknown paths so client-side routing works.
+    "not_found_handling": "single-page-application"
+  }
+}
