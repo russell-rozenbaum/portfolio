@@ -33,6 +33,8 @@
   --font-lcd: 'VT323', monospace;             /* readouts / titles / body */
   --font-label: 'Oswald', sans-serif;
   --font-mono: 'VT323', monospace;
+  --font-brand: 'Cormorant', Georgia, serif;      /* Sprachy wordmark */
+  --font-brand-body: 'Rokkitt', Georgia, serif;   /* Sprachy motto */
 
   color-scheme: light;
   -webkit-font-smoothing: antialiased;

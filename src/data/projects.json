@@ -1,15 +1,27 @@
 [
   {
     "category": "App",
-    "name": "Sprachy — Every Translation, a Little Smarter",
+    "name": "Sprachy — AI Translations & Semantic Mappings",
     "url": "https://sprachy.ai/",
     "thumbnail": "/projects/sprachy-logo.svg",
+    "brand": { "name": "Sprachy", "motto": "Every translation, a little smarter" },
     "skills": [
       "Deployed cloud infra — Cloudflare (DNS, proxy, frontend) + Railway (backend)",
       "Configured email-based auth + Google OAuth (Supabase, AWS SES SMTP)",
       "Built CI/CD for automated frontend & backend deploys",
       "Integrated LLM + speech stack — OpenRouter / Gemini, Google & Edge TTS, AssemblyAI STT",
       "Native iOS (Swift) · Supabase Postgres · Google Cloud Translate · AdMob"
+    ]
+  },
+  {
+    "category": "Audio Plugin",
+    "name": "Grandma's Tape Machine",
+    "url": "https://github.com/russell-rozenbaum/GrandmasTapeMachine",
+    "thumbnail": "/projects/grandmas-tape-machine.png",
+    "skills": [
+      "Real-time tape-degradation DSP in Max/MSP — dropout, wow/flutter, noise, stereo imaging",
+      "Processing (Java) control interface routed to the Max audio engine",
+      "Audio software engineering — signal-flow design & effect modeling"
     ]
   },
   {

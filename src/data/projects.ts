@@ -11,6 +11,8 @@ export type Project = {
   thumbnail: string
   /** Skills learned — rendered as little bullets under the name */
   skills: string[]
+  /** Optional branded thumbnail: smaller logo + wordmark + motto (e.g. Sprachy) */
+  brand?: { name: string; motto: string }
 }
 
 /**

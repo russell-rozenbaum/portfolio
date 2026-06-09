@@ -27,32 +27,51 @@ function ProjectRow({ project }: { project: Project }) {
         )}
       </div>
 
-      <a
-        className="project__thumb sticker"
-        href={project.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Watch: ${project.name}`}
-      >
-        <img
-          className={isLogo ? 'is-logo' : undefined}
-          src={project.thumbnail}
-          alt={`${project.name} thumbnail`}
-          loading="lazy"
-          onError={(e) => {
-            const img = e.currentTarget
-            if (!img.dataset.fallback) {
-              img.dataset.fallback = '1'
-              img.src = img.src.replace('maxresdefault', 'hqdefault')
-            }
-          }}
-        />
-        {isVideo && (
-          <span className="project__play" aria-hidden="true">
-            <PlayIcon />
-          </span>
-        )}
-      </a>
+      {project.brand ? (
+        <a
+          className="project__thumb project__thumb--brand sticker"
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open: ${project.brand.name}`}
+        >
+          <img
+            className="project__brandlogo"
+            src={project.thumbnail}
+            alt={`${project.brand.name} logo`}
+            loading="lazy"
+          />
+          <span className="project__brandname">{project.brand.name}</span>
+          <span className="project__brandmotto">{project.brand.motto}</span>
+        </a>
+      ) : (
+        <a
+          className="project__thumb sticker"
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Watch: ${project.name}`}
+        >
+          <img
+            className={isLogo ? 'is-logo' : undefined}
+            src={project.thumbnail}
+            alt={`${project.name} thumbnail`}
+            loading="lazy"
+            onError={(e) => {
+              const img = e.currentTarget
+              if (!img.dataset.fallback) {
+                img.dataset.fallback = '1'
+                img.src = img.src.replace('maxresdefault', 'hqdefault')
+              }
+            }}
+          />
+          {isVideo && (
+            <span className="project__play" aria-hidden="true">
+              <PlayIcon />
+            </span>
+          )}
+        </a>
+      )}
     </div>
   )
 }

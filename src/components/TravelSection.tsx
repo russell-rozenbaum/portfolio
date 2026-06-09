@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { travel } from '../data/travel'
 import './TravelSection.css'
 
@@ -88,8 +88,67 @@ const Arrow = () => (
 
 export default function TravelSection() {
   const viewportRef = useRef<HTMLDivElement>(null)
+  const itemsRef = useRef<(HTMLLIElement | null)[]>([])
   // mouse drag-to-scroll (touch / trackpad use native scrolling)
   const drag = useRef({ active: false, startX: 0, startScroll: 0 })
+
+  // ---- lightweight pendulum sway ----
+  // Each pinned item hangs from its clothespin; we integrate a damped spring
+  // (theta = swing angle) driven by the line's horizontal acceleration, plus a
+  // faint ambient breeze so they're never perfectly still.
+  useEffect(() => {
+    const vp = viewportRef.current
+    const items = itemsRef.current.filter(Boolean) as HTMLLIElement[]
+    if (!vp || items.length === 0) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const rnd = (n: number) => {
+      const x = Math.sin(n * 45.17 + 9.1) * 43758.5453
+      return x - Math.floor(x)
+    }
+    const sims = items.map((el, i) => ({
+      el,
+      theta: 0,
+      omega: 0,
+      stiffness: 56 + rnd(i) * 20, // natural frequency (variety per item)
+      damping: 5.4 + rnd(i + 7) * 1.8, // settle rate
+      gain: 0.42 + rnd(i + 3) * 0.22, // how hard the line's motion kicks it
+      breeze: 16 + rnd(i + 5) * 12, // ambient sway amplitude (deg/s²)
+      phase: rnd(i + 11) * Math.PI * 2,
+    }))
+
+    let lastScroll = vp.scrollLeft
+    let lastVel = 0
+    let lastT = 0
+    let raf = 0
+
+    const tick = (t: number) => {
+      if (!lastT) lastT = t
+      let dt = (t - lastT) / 1000
+      lastT = t
+      if (dt > 0.05) dt = 0.05 // clamp after a tab switch
+
+      const scroll = vp.scrollLeft
+      const vel = scroll - lastScroll
+      const accel = vel - lastVel // ∝ horizontal acceleration of the line
+      lastScroll = scroll
+      lastVel = vel
+
+      for (const s of sims) {
+        const kick = -accel * s.gain // inertia: swing opposite to the line
+        const breeze = Math.sin(t * 0.0012 + s.phase) * s.breeze
+        const aacc = -s.stiffness * s.theta - s.damping * s.omega + breeze
+        s.omega += aacc * dt + kick
+        s.theta += s.omega * dt
+        if (s.theta > 7) (s.theta = 7), (s.omega *= -0.3)
+        else if (s.theta < -7) (s.theta = -7), (s.omega *= -0.3)
+        s.el.style.setProperty('--sway', `${s.theta.toFixed(2)}deg`)
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [])
 
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType !== 'mouse') return
@@ -135,6 +194,9 @@ export default function TravelSection() {
           {travel.map((item, i) => (
             <li
               key={i}
+              ref={(el) => {
+                itemsRef.current[i] = el
+              }}
               className={`cl-item cl-item--${item.kind}`}
               style={{ ['--tilt' as string]: `${(i % 2 ? 1 : -1) * 2}deg` }}
             >
@@ -155,6 +217,7 @@ export default function TravelSection() {
               ) : (
                 <span className="cl-loc sticker sticker--thin">
                   <span className="cl-loc__name">{item.location}</span>
+                  <span className="cl-loc__date">{item.date}</span>
                   <Arrow />
                 </span>
               )}

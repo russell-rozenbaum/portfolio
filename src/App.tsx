@@ -92,12 +92,14 @@ export default function App() {
             </figure>
             <div className="overview__bio">
               <p>
-                [ bio placeholder ] — a couple of sentences about who you are,
-                what you build, and what you care about.
-              </p>
-              <p>
-                [ more placeholder ] — background, current focus, and anything
-                else you'd like visitors to know.
+                Hey! I'm Russell. I'm currently an{' '}
+                <a href="#work">AI Engineer at Ford Motor Company</a> and
+                building my own <a href="#projects">iOS app</a> on the side. I
+                also always find time to make a few{' '}
+                <a href="#music">beats</a>. And every now and then, I pursue{' '}
+                <a href="#research">research</a>,{' '}
+                <a href="#paintings">oil paint</a>, and{' '}
+                <a href="#travel">travel</a>.
               </p>
             </div>
           </div>
@@ -108,9 +110,9 @@ export default function App() {
           <h2 className="section__title">Work Experience</h2>
           <div className="xp xp--logos">
             {experience.map((item) => (
-              <div className="xp__item" key={`${item.org}-${item.role}`}>
+              <div className="xp__item sticker" key={`${item.org}-${item.role}`}>
                 {item.logo && (
-                  <span className="xp__logo sticker sticker--thin">
+                  <span className="xp__logo">
                     <img
                       src={`/logos/${item.logo}`}
                       alt={`${item.org} logo`}
@@ -137,26 +139,18 @@ export default function App() {
               </div>
             ))}
           </div>
-          <div className="docs-row">
-            <PdfDoc
-              src={docs.resume.src}
-              title={docs.resume.title}
-              downloadName={docs.resume.downloadName}
-              kind="Résumé"
-            />
-          </div>
         </section>
 
         {/* ---- Research ---- */}
         <section id="research" className="section">
           <h2 className="section__title">Research</h2>
           <div className="xp">
-            <div className="xp__item">
-              <div className="xp__head xp__head--logo">
-                <span className="xp__inline-logo">
-                  <img src="/logos/hazel.svg" alt="Hazel logo" />
-                </span>
-                <span className="xp__headtext">
+            <div className="xp__item xp__item--logo sticker">
+              <span className="xp__logo">
+                <img src="/logos/hazel.svg" alt="Hazel logo" />
+              </span>
+              <div className="xp__body">
+                <div className="xp__head">
                   <span className="xp__role">
                     Undergraduate AI / PL Researcher
                   </span>
@@ -164,42 +158,44 @@ export default function App() {
                     Future of Programming Lab · Ann Arbor, MI · May 2024 –
                     Present
                   </span>
-                </span>
-              </div>
-              <ul className="xp__bullets">
-                <li>
-                  Designed an LLM code-completion assistant in the Hazel editor
-                  that completes tasks purely through a structure-based action
-                  language (OCaml, Bonsai, OpenRouter API).
-                </li>
-                <li>
-                  Built an in-editor exercise suite letting instructors author
-                  and edit problems directly within Hazel.
-                </li>
-              </ul>
-              <div className="prs">
-                <span className="prs__label">Merged PRs · hazelgrove/hazel</span>
-                <ul className="prs__list">
-                  {hazelPRs.map((pr) => (
-                    <li key={pr.number}>
-                      <a
-                        className="pr"
-                        href={pr.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <span className="pr__gh" aria-hidden="true">
-                          <GithubIcon />
-                        </span>
-                        <span className="pr__num">#{pr.number}</span>
-                        <span className="pr__title">{pr.title}</span>
-                      </a>
-                    </li>
-                  ))}
+                </div>
+                <ul className="xp__bullets">
+                  <li>
+                    Designed an LLM code-completion assistant in the Hazel
+                    editor that completes tasks purely through a structure-based
+                    action language (OCaml, Bonsai, OpenRouter API).
+                  </li>
+                  <li>
+                    Built an in-editor exercise suite letting instructors author
+                    and edit problems directly within Hazel.
+                  </li>
                 </ul>
+                <div className="prs sticker sticker--thin">
+                  <span className="prs__label">
+                    Merged PRs · hazelgrove/hazel
+                  </span>
+                  <ul className="prs__list">
+                    {hazelPRs.map((pr) => (
+                      <li key={pr.number}>
+                        <a
+                          className="pr"
+                          href={pr.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <span className="pr__gh" aria-hidden="true">
+                            <GithubIcon />
+                          </span>
+                          <span className="pr__num">#{pr.number}</span>
+                          <span className="pr__title">{pr.title}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-            <div className="xp__item">
+            <div className="xp__item sticker">
               <div className="xp__head">
                 <span className="xp__role">Senior Honors Thesis — EECS 443</span>
                 <span className="xp__meta">University of Michigan · 2024 – 2025</span>
@@ -211,27 +207,27 @@ export default function App() {
                   agents in Hazel (advised by Prof. Cyrus Omar).
                 </li>
               </ul>
+              <div className="docs-row docs-row--sub">
+                <PdfDoc
+                  src={docs.poster.src}
+                  title={docs.poster.title}
+                  downloadName={docs.poster.downloadName}
+                  kind="Poster"
+                />
+                <PdfDoc
+                  src={docs.thesis.src}
+                  title={docs.thesis.title}
+                  downloadName={docs.thesis.downloadName}
+                  kind="Thesis"
+                />
+                <PdfDoc
+                  src={docs.slides.src}
+                  title={docs.slides.title}
+                  downloadName={docs.slides.downloadName}
+                  kind="Slides"
+                />
+              </div>
             </div>
-          </div>
-          <div className="docs-row">
-            <PdfDoc
-              src={docs.poster.src}
-              title={docs.poster.title}
-              downloadName={docs.poster.downloadName}
-              kind="Poster"
-            />
-            <PdfDoc
-              src={docs.thesis.src}
-              title={docs.thesis.title}
-              downloadName={docs.thesis.downloadName}
-              kind="Thesis"
-            />
-            <PdfDoc
-              src={docs.slides.src}
-              title={docs.slides.title}
-              downloadName={docs.slides.downloadName}
-              kind="Slides"
-            />
           </div>
         </section>
 

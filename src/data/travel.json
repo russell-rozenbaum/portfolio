@@ -1,11 +1,16 @@
 [
   {
+    "location": "Chicago, USA",
+    "date": "May 2026",
+    "images": ["DSC03160.jpg", "DSC03192.jpg"]
+  },
+  {
     "location": "Domodossola, Italy",
     "date": "February 2026",
     "images": ["DSC01298.jpg", "DSC01313.jpg", "DSC01335.JPEG"]
   },
   {
-    "location": "Switzerland",
+    "location": "Berner Oberland, Switzerland",
     "date": "February 2026",
     "images": [
       "DSC01370_raw.JPEG",
@@ -13,10 +18,28 @@
       "DSC01425.jpg",
       "DSC01438.jpg",
       "DSC01552_raw.jpg",
-      "DSC01559_raw.jpg",
-      "DSC01918_raw.JPG",
-      "DSC01921_raw.JPG",
-      "DSC02228.jpg"
+      "DSC01559_raw.jpg"
+    ]
+  },
+  {
+    "location": "Zürich, Switzerland",
+    "date": "February 2026",
+    "images": ["DSC01918_raw.JPG", "DSC01921_raw.JPG", "DSC02228.jpg"]
+  },
+  {
+    "location": "Upper Peninsula, MI",
+    "date": "October 2025",
+    "images": ["IMG_4452.jpg", "IMG_4547.jpg", "IMG_4776.jpg", "IMG_4781.jpg"]
+  },
+  {
+    "location": "Puerto Rico",
+    "date": "April 2024",
+    "images": [
+      "IMG_6037.jpg",
+      "IMG_6077.jpg",
+      "IMG_6083.jpg",
+      "IMG_6286.jpg",
+      "IMG_6400.jpg"
     ]
   }
 ]
