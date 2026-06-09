@@ -230,15 +230,19 @@
    even items (2nd, 4th, …): mirrored                                  */
 .xp--logos .xp__item {
   flex-direction: row;
-  align-items: center;
-  gap: clamp(18px, 3.5vw, 44px);
+  align-items: flex-start;
+  /* flex-start = main-start: left for row (odd), right for row-reverse (even),
+     so the logo+text group hugs the correct side either way */
+  justify-content: flex-start;
+  gap: clamp(16px, 2.4vw, 34px);
 }
 .xp--logos .xp__item:nth-child(even) {
   flex-direction: row-reverse;
 }
 .xp__body {
-  flex: 1 1 0;
+  flex: 0 1 auto; /* size to content, don't stretch & shove the logo away */
   min-width: 0;
+  max-width: 78ch;
   display: flex;
   flex-direction: column;
   gap: 6px;

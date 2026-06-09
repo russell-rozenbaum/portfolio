@@ -1,30 +1,41 @@
 # Drop your travel photos here ✈️
 
-This folder (`public/travel/`) holds images from your travels.
+This folder (`public/travel/`) holds the photos shown on the Travel
+**clothesline** — a sketched string of pinned photos you can drag/click through.
 
-## To add a photo
+## To add photos
 
-1. **Drop the image file here** — e.g. `lisbon-rooftops.jpg`
-2. **Edit `src/data/travel.json`** — one entry per photo, in display order:
+1. **Drop the image files here** — e.g. `lisbon-rooftops.jpg`
+2. **Edit `src/data/travel.json`** — photos are organised into **location
+   groups**, in display order along the line:
 
    ```json
-   {
-     "location": "Lisbon, Portugal",
-     "date": "March 2024",
-     "image": "lisbon-rooftops.jpg"
-   }
+   [
+     {
+       "location": "Domodossola, Italy",
+       "date": "February 2026",
+       "images": ["DSC01298.jpg", "DSC01313.jpg"]
+     },
+     {
+       "location": "Switzerland",
+       "date": "February 2026",
+       "images": ["DSC01370.jpg", "DSC01467.jpg"]
+     }
+   ]
    ```
 
-   - `location` — where the photo was taken
-   - `date`     — any text ("2024", "March 2024", …)
-   - `image`    — just the filename you dropped in this folder
+   - `location` — shown on a little pinned tag with an arrow pointing to that
+     group's photos
+   - `date`     — any text ("2024", "February 2026", …)
+   - `images`   — just the filenames you dropped here, in order
+
+   Add as many groups as you like — each becomes its own tag + run of photos.
 
 ## Layout
 
-- Photos are listed vertically, alternating sides:
-  - **odd** rows (1st, 3rd, …): image on the left, location/date on the right
-  - **even** rows (2nd, 4th, …): mirrored
-- Each photo keeps its own proportions — portrait and landscape both display uncropped.
+- Photos hang from a wobbly clothesline, clipped by sketched clothespins.
+- The centre photo is sharp; neighbours dim and shrink.
+- Click a neighbour, drag/swipe, or use the side chevrons to slide the line.
+- Each photo keeps its own proportions — portrait and landscape both uncropped.
 - `.jpg`, `.png`, `.webp` all work.
-- Until an image exists, that entry shows a "NO IMAGE" placeholder — the section still works.
-- The two `example-*` entries in `travel.json` are placeholders; replace them with your own.
+- A missing file shows a small hatched placeholder — the line still works.

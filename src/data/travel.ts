@@ -1,23 +1,44 @@
 import travelConfig from './travel.json'
 
-export type TravelStop = {
-  /** Where the photo was taken — e.g. "Lisbon, Portugal" */
-  location: string
-  /** Date, written however you like — e.g. "2024" or "March 2024" */
-  date: string
-  /** Web path to the image (built from the filename in the JSON) */
-  image: string
-}
-
 /**
- * Travel gallery — configured by `travel.json` + a drop folder,
- * same pattern as the oil paintings, music tracks, and album covers.
+ * Travel clothesline — configured by `travel.json` + a drop folder.
  *
  *   Edit `travel.json`, drop images in  public/travel/
- *   Each entry: { "location": "...", "date": "...", "image": "<filename>" }
+ *   Each group: { "location": "...", "date": "...", "images": ["<filename>", …] }
+ *
+ * Groups are flattened into a single "track" of items hung on the line:
+ * a location tag, then that location's photos, then the next tag, etc.
+ *
+ *   [Domodossola →] [img] [img] [Switzerland →] [img] [img] …
  */
-export const travel: TravelStop[] = travelConfig.map((t) => ({
-  location: t.location,
-  date: t.date,
-  image: `/travel/${t.image}`,
-}))
+export type TravelPhoto = {
+  kind: 'photo'
+  /** Web path to the image (built from the filename in the JSON) */
+  image: string
+  location: string
+  date: string
+  /** index of the group this photo belongs to */
+  group: number
+}
+
+export type TravelLoc = {
+  kind: 'loc'
+  location: string
+  date: string
+  group: number
+}
+
+export type TravelItem = TravelPhoto | TravelLoc
+
+export const travel: TravelItem[] = travelConfig.flatMap((g, gi) => [
+  { kind: 'loc', location: g.location, date: g.date, group: gi } as TravelLoc,
+  ...g.images.map(
+    (img): TravelPhoto => ({
+      kind: 'photo',
+      image: `/travel/${img}`,
+      location: g.location,
+      date: g.date,
+      group: gi,
+    })
+  ),
+])

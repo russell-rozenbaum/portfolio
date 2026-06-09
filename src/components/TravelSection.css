@@ -1,124 +1,136 @@
 /* ============================================================
-   Travel — vertical log, alternating image / caption sides.
-   Odd rows  (1st, 3rd, …): image left,  caption right.
-   Even rows (2nd, 4th, …): image right, caption left.
+   Travel — a sketched clothesline. Photos & location tags are
+   pinned to a wobbly, full-bleed string. Just a horizontal
+   strip you drag/swipe through — no focus, no snap.
    ============================================================ */
-.travel__list {
+.clothesline {
+  --line-y: clamp(16px, 2.6vw, 26px);
+  --vp-pad-top: 10px;
+  position: relative;
+}
+
+/* the clothesline string — full-bleed, breaks past the page's safety margin
+   to the screen edges. Static: the pinned photos slide along it. */
+.clothesline__string {
+  position: absolute;
+  top: calc(var(--vp-pad-top) + var(--line-y));
+  left: calc(-1 * (100vw - 100%) / 2); /* escape the centred content column */
+  width: 100vw;
+  height: 3px;
+  background: var(--ink);
+  filter: url(#wobble);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* horizontal scroller — native swipe + mouse drag-to-scroll */
+.clothesline__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--vp-pad-top) 0 16px;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-x;
+}
+.clothesline__viewport::-webkit-scrollbar {
+  display: none;
+}
+.clothesline__viewport:active {
+  cursor: grabbing;
+}
+
+.clothesline__track {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding-inline: clamp(20px, 4vw, 60px); /* a little breathing room at the ends */
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(28px, 4vw, 60px);
+}
+
+/* ---- a pinned item (photo or tag) hanging from the line ---- */
+.cl-item {
+  position: relative;
+  flex: 0 0 auto;
+  margin-top: var(--line-y); /* top edge sits on the string */
   display: flex;
   flex-direction: column;
-  gap: clamp(28px, 4vw, 52px);
-}
-
-.travel__row {
-  display: flex;
   align-items: center;
-  gap: clamp(20px, 4vw, 48px);
-}
-/* even rows mirror the layout (image moves to the right) */
-.travel__row:nth-child(even) {
-  flex-direction: row-reverse;
+  transform: rotate(var(--tilt, 0deg));
 }
 
-/* a gentle hand-placed tilt, alternating per row */
-.travel__row:nth-child(odd) .travel__frame {
-  transform: rotate(-0.7deg);
+/* clothespin straddling the string at the item's top edge */
+.cl-pin {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -54%) rotate(var(--tilt, 0deg));
+  z-index: 3;
 }
-.travel__row:nth-child(even) .travel__frame {
-  transform: rotate(0.7deg);
+.cl-pin__svg {
+  width: clamp(16px, 1.8vw, 21px);
+  height: auto;
+  display: block;
 }
 
-/* framed photo (matte + wobbly border + offset shadow)
-   — no fixed aspect ratio: the frame sizes to each photo's own proportions */
-.travel__frame {
-  --shadow-x: 7px;
-  --shadow-y: 8px;
-  position: relative;
-  flex: 0 0 clamp(200px, 42%, 420px);
-  min-height: 64px; /* keeps room for the NO IMAGE placeholder */
+/* ---- photo card (matte sticker frame, proportions retained) ---- */
+.cl-photo {
+  --fill: var(--cream);
+  --shadow-x: 6px;
+  --shadow-y: 7px;
+  display: block;
   padding: 6px;
   border-radius: 3px;
-  transition: transform 0.18s ease;
 }
-.travel__frame:hover {
-  transform: translateY(-3px) rotate(0deg);
+.cl-photo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: clamp(150px, 24vw, 244px);
+  max-width: clamp(170px, 30vw, 320px);
+  border-radius: 2px;
 }
-.travel__ph {
-  position: absolute;
-  inset: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-family: var(--font-pixel);
-  font-size: 0.5rem;
-  line-height: 1.6;
-  letter-spacing: 0.08em;
-  color: var(--ink-soft);
-  background-image: repeating-linear-gradient(
+.cl-photo img.is-missing {
+  width: 150px;
+  height: 110px;
+  background: repeating-linear-gradient(
     45deg,
     transparent 0 8px,
     rgba(22, 19, 15, 0.07) 8px 10px
   );
 }
-.travel__frame img {
-  position: relative; /* in-flow, so the frame grows to the photo's height */
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  border-radius: 2px;
-  z-index: 1;
-  display: block;
-}
-.travel__frame img.is-missing {
-  opacity: 0; /* reveal the NO IMAGE placeholder */
-}
 
-/* caption — location over date, aligned toward the photo */
-.travel__cap {
-  flex: 1 1 0;
+/* ---- location tag: a tall hanging tag, name written vertically,
+   a sketched arrow at the foot pointing to that location's photos ---- */
+.cl-loc {
+  --fill: var(--cream);
+  --shadow-x: 5px;
+  --shadow-y: 6px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  gap: clamp(8px, 1vw, 14px);
+  padding: clamp(14px, 1.6vw, 20px) clamp(8px, 0.9vw, 12px);
+  border-radius: 3px;
+  margin-top: clamp(8px, 1.4vw, 16px); /* hang a touch lower, like a tag */
 }
-.travel__row:nth-child(even) .travel__cap {
-  text-align: right;
-  align-items: flex-end;
-}
-
-.travel__loc {
-  font-family: var(--font-lcd);
-  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
-  line-height: 1.1;
+.cl-loc__name {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-family: var(--font-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em; /* vertical gap between stacked letters */
+  line-height: 0.92;
+  font-size: clamp(0.74rem, 1.3vw, 0.95rem);
   color: var(--ink);
 }
-.travel__date {
-  font-family: var(--font-label);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.72rem;
-  color: var(--ink-soft);
-}
-
-/* stack on narrow screens — image always on top, text below */
-@media (max-width: 640px) {
-  .travel__row,
-  .travel__row:nth-child(even) {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: left;
-    gap: 12px;
-  }
-  .travel__row:nth-child(even) .travel__cap {
-    text-align: left;
-    align-items: flex-start;
-  }
-  .travel__frame {
-    flex-basis: auto;
-    width: 100%;
-  }
+.cl-loc__arrow {
+  width: clamp(30px, 3.6vw, 46px);
+  height: auto;
+  color: var(--accent);
+  flex: 0 0 auto;
 }
