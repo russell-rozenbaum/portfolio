@@ -15,7 +15,6 @@
   --accent: #3a7ba1;
   --accent-bright: #5aa0c6;
 
-  --peach: #edb49d;       /* light peach — text-selection highlight */
   --forest: #34603f;      /* top bar — sketched forest green */
   --forest-deep: #244430;
 
@@ -77,7 +76,8 @@ body::after {
 }
 
 ::selection {
-  background: var(--peach);
+  /* light, translucent take on the thematic blue (--accent: #3a7ba1) */
+  background: rgba(58, 123, 161, 0.28);
   color: var(--ink);
 }
 

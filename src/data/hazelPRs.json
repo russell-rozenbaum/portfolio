@@ -1,0 +1,10 @@
+[
+  { "number": 2202, "title": "Coding Agent UI Updates", "url": "https://github.com/hazelgrove/hazel/pull/2202" },
+  { "number": 2131, "title": "Coding Agent", "url": "https://github.com/hazelgrove/hazel/pull/2131" },
+  { "number": 2008, "title": "Assistant Actions: top-level nav and update refactor", "url": "https://github.com/hazelgrove/hazel/pull/2008" },
+  { "number": 1575, "title": "LLM Hole Fillings and Assistant Sidebar", "url": "https://github.com/hazelgrove/hazel/pull/1575" },
+  { "number": 1728, "title": "Handle Deletion of Last Remaining ScratchPad", "url": "https://github.com/hazelgrove/hazel/pull/1728" },
+  { "number": 1680, "title": "Fixes Highlighting Bug Introduced by Exercise Mode Editing", "url": "https://github.com/hazelgrove/hazel/pull/1680" },
+  { "number": 1444, "title": "Exercise Mode Editing Capabilities", "url": "https://github.com/hazelgrove/hazel/pull/1444" },
+  { "number": 1352, "title": "Mutant: Add, Delete, and Title Editor", "url": "https://github.com/hazelgrove/hazel/pull/1352" }
+]

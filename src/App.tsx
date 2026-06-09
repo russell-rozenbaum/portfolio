@@ -8,6 +8,7 @@ import { useAudioPlayer } from './hooks/useAudioPlayer'
 import { tracks } from './data/tracks'
 import { docs } from './data/docs'
 import experience from './data/experience.json'
+import hazelPRs from './data/hazelPRs.json'
 import './App.css'
 
 const GithubIcon = () => (
@@ -151,10 +152,18 @@ export default function App() {
           <h2 className="section__title">Research</h2>
           <div className="xp">
             <div className="xp__item">
-              <div className="xp__head">
-                <span className="xp__role">Undergraduate AI / PL Researcher</span>
-                <span className="xp__meta">
-                  Future of Programming Lab · Ann Arbor, MI · May 2024 – Present
+              <div className="xp__head xp__head--logo">
+                <span className="xp__inline-logo">
+                  <img src="/logos/hazel.svg" alt="Hazel logo" />
+                </span>
+                <span className="xp__headtext">
+                  <span className="xp__role">
+                    Undergraduate AI / PL Researcher
+                  </span>
+                  <span className="xp__meta">
+                    Future of Programming Lab · Ann Arbor, MI · May 2024 –
+                    Present
+                  </span>
                 </span>
               </div>
               <ul className="xp__bullets">
@@ -168,6 +177,27 @@ export default function App() {
                   and edit problems directly within Hazel.
                 </li>
               </ul>
+              <div className="prs">
+                <span className="prs__label">Merged PRs · hazelgrove/hazel</span>
+                <ul className="prs__list">
+                  {hazelPRs.map((pr) => (
+                    <li key={pr.number}>
+                      <a
+                        className="pr"
+                        href={pr.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span className="pr__gh" aria-hidden="true">
+                          <GithubIcon />
+                        </span>
+                        <span className="pr__num">#{pr.number}</span>
+                        <span className="pr__title">{pr.title}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
             <div className="xp__item">
               <div className="xp__head">

@@ -1,135 +1,43 @@
-.shelf-unit {
+/* ============================================================
+   Album grid — square covers, max 3 per row, click → album URL
+   ============================================================ */
+.albums-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(18px, 2.5vw, 34px);
+}
+
+.album-card {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-}
-
-/* ============================================================
-   The shelf — vinyl spines standing on a board
-   ============================================================ */
-.shelf {
-  position: relative;
-  padding: 0 6px;
-}
-.spines {
-  list-style: none;
-  margin: 0;
-  padding: 0 4px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 9px;
-  position: relative;
-  z-index: 1;
-  min-height: 184px;
-}
-.spines li {
-  display: flex;
-  align-items: flex-end;
-}
-
-.spine {
-  --shadow-x: 4px;
-  --shadow-y: 5px;
-  width: 34px;
-  height: 172px;
-  border: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ink);
-  transition: transform 0.24s cubic-bezier(0.2, 0.9, 0.3, 1.3);
-  transform: translateY(0) rotate(-0.6deg);
-}
-.spine:nth-child(even) {
-  transform: translateY(0) rotate(0.8deg);
-}
-/* the spine face = a vertical slice of the real cover art (like a record spine).
-   gradient on top keeps the printed title legible over varied artwork. */
-.spine.sticker::before {
-  background-image: linear-gradient(
-      rgba(0, 0, 0, 0.18),
-      rgba(0, 0, 0, 0.38)
-    ),
-    var(--cover);
-  background-size: cover, cover;
-  background-position: left center, left center;
-  background-repeat: no-repeat, no-repeat;
-}
-
-.spine__title {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  font-family: var(--font-label);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 0.7rem;
-  color: #f6f1e6;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.5);
-  white-space: nowrap;
-  overflow: hidden;
-  max-height: 148px;
-  text-overflow: ellipsis;
-  pointer-events: none;
-}
-
-/* hover / active = the record pops up off the shelf */
-.spine:hover,
-.spine--active {
-  transform: translateY(-18px) rotate(0deg) scale(1.04);
-}
-.spine:focus-visible {
-  outline: none;
-  transform: translateY(-18px) rotate(0deg) scale(1.04);
-}
-
-/* the shelf board the records rest on */
-.shelf__board {
-  --fill: var(--case);
-  --shadow-x: 6px;
-  --shadow-y: 6px;
-  height: 16px;
-  margin-top: -4px;
-  border-radius: 2px;
-}
-
-/* ============================================================
-   Album detail panel (updates on hover)
-   ============================================================ */
-.album {
-  display: flex;
-  gap: 16px;
-  align-items: center;
+  gap: 11px;
   text-decoration: none;
   color: var(--ink);
-  padding-top: 6px;
-  animation: album-in 0.32s cubic-bezier(0.2, 0.9, 0.3, 1.15) backwards;
 }
-@keyframes album-in {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-  }
+.album-card:nth-child(odd) .album-card__cover {
+  transform: rotate(-0.8deg);
+}
+.album-card:nth-child(even) .album-card__cover {
+  transform: rotate(0.8deg);
 }
 
-.album__cover {
+/* framed square cover (matte + wobbly border + offset shadow) */
+.album-card__cover {
   --shadow-x: 8px;
   --shadow-y: 9px;
   position: relative;
-  width: 184px;
-  height: 184px;
-  flex: none;
+  aspect-ratio: 1 / 1;
+  padding: 6px;
   border-radius: 3px;
   overflow: hidden;
+  transition: transform 0.18s ease;
 }
-.album__ph {
+.album-card__cover:hover {
+  transform: translateY(-4px) rotate(0deg);
+}
+.album-card__ph {
   position: absolute;
-  inset: 0;
+  inset: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -142,50 +50,71 @@
   color: var(--ink-soft);
   background-image: repeating-linear-gradient(
     45deg,
-    transparent 0 7px,
-    rgba(22, 19, 15, 0.08) 7px 9px
+    transparent 0 8px,
+    rgba(22, 19, 15, 0.07) 8px 10px
   );
 }
-.album__cover img {
+.album-card__cover img {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
   object-fit: cover;
+  border-radius: 2px;
   z-index: 1;
+  display: block;
 }
-.album__cover img.is-missing {
-  opacity: 0; /* reveal the NO COVER placeholder underneath */
+.album-card__cover img.is-missing {
+  opacity: 0; /* reveal the NO COVER placeholder */
 }
 
-.album__info {
+/* hover "Listen" badge over the cover */
+.album-card__listen {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  z-index: 2;
+  padding: 7px 10px;
+  font-family: var(--font-pixel);
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: var(--cream);
+  background: rgba(22, 19, 15, 0.78);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+.album-card__cover:hover .album-card__listen {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.album-card__info {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  min-width: 0;
+  gap: 2px;
+  padding: 0 2px;
 }
-.album__title {
+.album-card__title {
   font-family: var(--font-lcd);
-  font-size: 2.5rem;
-  line-height: 0.9;
+  font-size: 1.5rem;
+  line-height: 0.95;
   text-transform: uppercase;
   letter-spacing: 0.01em;
 }
-.album__date {
-  font-family: var(--font-pixel);
-  font-size: 0.52rem;
+.album-card__date {
+  font-family: var(--font-label);
+  font-weight: 600;
+  text-transform: uppercase;
   letter-spacing: 0.06em;
+  font-size: 0.7rem;
   color: var(--ink-soft);
-  margin-top: 2px;
 }
-.album__cta {
-  margin-top: 6px;
-  font-family: var(--font-pixel);
-  font-size: 0.52rem;
-  letter-spacing: 0.06em;
-  color: var(--red);
-  transition: transform 0.12s ease;
-}
-.album:hover .album__cta {
-  transform: translateX(3px);
+
+@media (max-width: 560px) {
+  .albums-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
