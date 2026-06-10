@@ -288,6 +288,50 @@ export default function App() {
           <TravelSection />
         </section>
       </main>
+
+      {/* ---- footer: mirrors the top bar ---- */}
+      <footer className="footer">
+        <div className="footer__bar sticker">
+          <span className="footer__copy">© 2026 Russell Rozenbaum</span>
+          <div className="topbar__links">
+            <a
+              className="topbar__icon"
+              href="https://github.com/russell-rozenbaum"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <GithubIcon />
+            </a>
+            <a
+              className="topbar__icon"
+              href="https://www.linkedin.com/in/rrozenbaum/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <LinkedinIcon />
+            </a>
+            <a
+              className="topbar__icon"
+              href="mailto:rjrozenbaum@gmail.com"
+              aria-label="Email"
+            >
+              <MailIcon />
+            </a>
+            <span className="topbar__icon">
+              <PdfDoc
+                src={docs.resume.src}
+                title={docs.resume.title}
+                downloadName={docs.resume.downloadName}
+                kind="Résumé"
+                variant="icon"
+              />
+            </span>
+          </div>
+        </div>
+        <p className="footer__note">Designed &amp; built by hand</p>
+      </footer>
     </div>
   )
 }
