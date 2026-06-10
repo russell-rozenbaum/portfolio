@@ -330,7 +330,6 @@ export default function App() {
             </span>
           </div>
         </div>
-        <p className="footer__note">Designed &amp; built by hand</p>
       </footer>
     </div>
   )

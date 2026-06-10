@@ -9,7 +9,7 @@
       "Deployed cloud infra — Cloudflare (DNS, proxy, frontend) + Railway (backend)",
       "Configured email-based auth + Google OAuth (Supabase, AWS SES SMTP)",
       "Built CI/CD for automated frontend & backend deploys",
-      "Integrated LLM + speech stack — OpenRouter / Gemini, Google & Edge TTS, AssemblyAI STT",
+      "Integrated LLM + speech stack — OpenRouter / Gemini, Google Cloud TTS (WaveNet), on-device Apple STT & OCR",
       "Native iOS (Swift) · Supabase Postgres · Google Cloud Translate · AdMob"
     ]
   },

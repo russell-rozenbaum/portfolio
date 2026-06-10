@@ -43,12 +43,12 @@
   background: var(--c-ocean);
 }
 
-/* hover: they swap places, each keeping its colour — the cloud dot expands
+/* hover: they swap places, each keeping its colour — the ocean dot expands
    outward into the ring, the periwinkle ring collapses inward into the dot
-   (150% of the default ring size) */
+   (120% of the default ring size) */
 .cursor.is-hover .cursor__dot {
-  width: 57px;
-  height: 57px;
+  width: 46px;
+  height: 46px;
   background: transparent;
   border-color: var(--c-ocean);
 }

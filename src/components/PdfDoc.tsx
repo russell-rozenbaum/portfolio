@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import * as pdfjsLib from 'pdfjs-dist'
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
 import type { PDFDocumentProxy } from 'pdfjs-dist'
@@ -181,7 +182,8 @@ export default function PdfDoc({
         </button>
       )}
 
-      {open && (
+      {open &&
+        createPortal(
         <div
           className="pdf-modal"
           role="dialog"
@@ -289,7 +291,8 @@ export default function PdfDoc({
               <canvas ref={modalRef} className="pdf-modal__canvas" />
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   )

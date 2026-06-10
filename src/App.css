@@ -386,15 +386,13 @@
   }
 }
 
-/* ---- mobile (≤640px): bigger/taller MP3 player + reactive wired earbuds ---- */
+/* ---- mobile (≤640px): bigger/taller MP3 player ---- */
 .mp3rig {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  /* room above the player for the dangling earbuds */
-  padding-top: clamp(104px, 30vw, 150px);
 }
 .mp3rig__player {
   width: min(420px, 92vw);
