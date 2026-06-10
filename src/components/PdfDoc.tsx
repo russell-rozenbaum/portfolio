@@ -135,6 +135,40 @@ export default function PdfDoc({
   }
   const zoomBy = (factor: number) =>
     setZoom((z) => Math.min(4, Math.max(0.3, z * factor)))
+
+  // Mouse click-drag to pan when zoomed. Touch is left to native scrolling
+  // (which already pans + has momentum), so we only hijack the mouse here.
+  const pan = useRef<{ x: number; y: number; left: number; top: number } | null>(
+    null,
+  )
+  const onPanDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return
+    const body = bodyRef.current
+    if (!body) return
+    const canScroll =
+      body.scrollWidth > body.clientWidth || body.scrollHeight > body.clientHeight
+    if (!canScroll) return
+    pan.current = {
+      x: e.clientX,
+      y: e.clientY,
+      left: body.scrollLeft,
+      top: body.scrollTop,
+    }
+    body.setPointerCapture(e.pointerId)
+    body.classList.add('is-grabbing')
+  }
+  const onPanMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const body = bodyRef.current
+    if (!pan.current || !body) return
+    body.scrollLeft = pan.current.left - (e.clientX - pan.current.x)
+    body.scrollTop = pan.current.top - (e.clientY - pan.current.y)
+  }
+  const onPanUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    const body = bodyRef.current
+    pan.current = null
+    body?.classList.remove('is-grabbing')
+    if (body?.hasPointerCapture(e.pointerId)) body.releasePointerCapture(e.pointerId)
+  }
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
@@ -287,7 +321,14 @@ export default function PdfDoc({
               </div>
             </div>
 
-            <div className="pdf-modal__body" ref={bodyRef}>
+            <div
+              className="pdf-modal__body"
+              ref={bodyRef}
+              onPointerDown={onPanDown}
+              onPointerMove={onPanMove}
+              onPointerUp={onPanUp}
+              onPointerCancel={onPanUp}
+            >
               <canvas ref={modalRef} className="pdf-modal__canvas" />
             </div>
           </div>

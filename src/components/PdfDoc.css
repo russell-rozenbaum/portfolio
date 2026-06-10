@@ -197,6 +197,16 @@
   overflow: auto;
   padding: 0;
   background: var(--paper-deep);
+  -webkit-overflow-scrolling: touch; /* momentum scroll on iOS */
+}
+/* mouse drag-to-pan affordance (touch uses native scrolling) */
+@media (hover: hover) and (pointer: fine) {
+  .pdf-modal__body {
+    cursor: grab;
+  }
+  .pdf-modal__body.is-grabbing {
+    cursor: grabbing;
+  }
 }
 .pdf-modal__canvas {
   display: block;
