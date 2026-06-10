@@ -93,9 +93,12 @@
   fill: currentColor;
 }
 
-/* ---- footer: full-bleed band, mirrors the top bar ---- */
+/* ---- footer: full-bleed thematic band, flush to the window edges ---- */
 .footer {
-  width: 100%;
+  /* break out of the centred, padded column to span the whole window width;
+     .site has padding-bottom:0 so it also sits flush at the bottom */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
   margin-top: clamp(18px, 2.5vw, 30px);
 }
 .footer__bar {
@@ -115,8 +118,8 @@
 .footer__bar::before {
   content: '';
   position: absolute;
-  left: -6px;
-  right: -6px;
+  left: 0;
+  right: 0;
   top: 0;
   height: 3px;
   background: var(--ink);
@@ -643,13 +646,22 @@
     display: none;
   }
 
-  /* research: merged-PR sub-card centred */
-  .prs {
-    align-items: center;
+  /* research: merged-PR list — full-width rows; titles wrap (no overflow) */
+  .prs__label {
     text-align: center;
   }
   .prs__list {
-    justify-content: center;
+    align-items: stretch;
+  }
+  .pr {
+    width: 100%;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .pr__title {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
   }
 
   /* doc cards centred */
@@ -721,6 +733,7 @@
   font-family: var(--font-lcd);
   font-size: 1.2rem;
   line-height: 1;
+  min-width: 0; /* allow the flex item to shrink so ellipsis works (no overflow) */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
