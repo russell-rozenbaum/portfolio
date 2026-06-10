@@ -165,15 +165,190 @@
   text-decoration-color: var(--accent);
 }
 
-/* ---- Music: shelf (left) · player (right) ---- */
-.music-row {
-  display: grid;
-  grid-template-columns: 1fr minmax(300px, 360px);
-  gap: clamp(24px, 4vw, 64px);
-  align-items: center; /* shelf centered vertically against the player */
+/* ---- Music: a retro computer flanked by speakers, albums centered below ---- */
+.hifi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(30px, 4.5vw, 56px);
 }
-.music-row__player .playbox {
+.hifi__deck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 2.6vw, 40px);
   width: 100%;
+}
+.computer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 1 auto;
+}
+
+/* monitor stand (neck + foot) under the CRT */
+.computer__stand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.computer__neck {
+  width: clamp(46px, 7vw, 70px);
+  height: clamp(14px, 1.8vw, 22px);
+  background: var(--computer);
+  border: 3px solid var(--ink);
+  border-top: 0;
+  filter: url(#wobble);
+}
+.computer__foot {
+  width: clamp(120px, 20vw, 190px);
+  height: clamp(12px, 1.5vw, 18px);
+  margin-top: -1px;
+  background: var(--computer);
+  border: 3px solid var(--ink);
+  border-radius: 0 0 7px 7px;
+  filter: url(#wobble);
+}
+
+/* ---- sketched speaker cabinets ---- */
+.speaker {
+  --fill: var(--computer);
+  --shadow-x: 5px;
+  --shadow-y: 6px;
+  flex: 0 0 auto;
+  width: clamp(74px, 10vw, 116px);
+  height: clamp(156px, 19vw, 224px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(11px, 1.5vw, 18px);
+  padding: clamp(13px, 1.7vw, 20px) 0;
+  border-radius: 8px;
+}
+/* toe-in: stay upright/flat, but angle the face inward toward the listener
+   (a subtle 3D Y-rotation, not a flat 2D tilt). The offset shadow is thrown
+   to each speaker's OUTER side (not the bottom) to sell the inward angle. */
+.speaker--left {
+  transform: perspective(780px) rotateY(15deg);
+  --shadow-x: -9px; /* shadow on the left (outer) side */
+  --shadow-y: 0px;
+}
+.speaker--right {
+  transform: perspective(780px) rotateY(-15deg);
+  --shadow-x: 9px; /* shadow on the right (outer) side */
+  --shadow-y: 0px;
+}
+.speaker__tweeter,
+.speaker__woofer {
+  position: relative;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+  background: var(--cream);
+  filter: url(#wobble);
+  will-change: transform; /* resonance is driven by JS */
+}
+.speaker__tweeter {
+  width: 30%;
+  aspect-ratio: 1;
+}
+.speaker__tweeter::after {
+  content: '';
+  position: absolute;
+  inset: 32%;
+  border-radius: 50%;
+  background: var(--ink);
+  filter: url(#wobble);
+}
+.speaker__woofer {
+  width: 66%;
+  aspect-ratio: 1;
+}
+.speaker__woofer::before {
+  content: '';
+  position: absolute;
+  inset: 17%;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  filter: url(#wobble);
+}
+.speaker__woofer::after {
+  content: '';
+  position: absolute;
+  inset: 38%;
+  border-radius: 50%;
+  background: var(--ink);
+  filter: url(#wobble);
+}
+
+/* ---- L/R volume knob (easter egg) ---- */
+.speaker__knob {
+  position: relative;
+  margin-top: auto;
+  width: clamp(28px, 3.6vw, 40px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+  background: var(--cream);
+  filter: url(#wobble);
+  cursor: ns-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+.speaker__knob:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.speaker__dial {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.speaker__notch {
+  position: absolute;
+  left: 50%;
+  top: 9%;
+  width: 3px;
+  height: 18%; /* short tick at the rim so it clears the L/R label */
+  transform: translateX(-50%);
+  background: var(--ink);
+  border-radius: 2px;
+}
+.speaker__klabel {
+  font-family: var(--font-pixel);
+  font-size: 0.4rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  pointer-events: none;
+}
+
+/* albums centered as a cluster below the deck */
+.hifi__albums {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.hifi__albums .albums-grid {
+  width: 100%;
+  max-width: 760px;
+}
+
+/* mobile: monitor on top, the two speakers in a row beneath it (with a gap) */
+@media (max-width: 760px) {
+  .hifi__deck {
+    flex-wrap: wrap;
+    gap: clamp(28px, 9vw, 56px);
+  }
+  .computer {
+    order: -1;
+    flex-basis: 100%;
+  }
+  .speaker {
+    width: clamp(64px, 17vw, 96px);
+    height: clamp(150px, 36vw, 200px);
+  }
 }
 
 /* ---- experience / research: header + bullet pairs ---- */

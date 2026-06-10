@@ -26,6 +26,15 @@
   --lcd-dim: #3f6378;     /* faded text */
   --lcd-glow: rgba(150, 198, 222, 0.6);
 
+  /* --- retro CRT screen (green phosphor / sage) --- */
+  --crt: #b7c47e;          /* screen glass */
+  --crt-bright: #eef3d2;   /* lit text on inverted cell */
+  --crt-deep: #889952;     /* dim cells / scanline */
+  --crt-ink: #2f3a1a;      /* dark pixels (text) */
+  --crt-dim: #5c6a32;      /* faded text */
+  --crt-glow: rgba(150, 175, 90, 0.45);
+  --computer: #d3c6a6;     /* beige CRT casing */
+
   --shadow-x: 11px;
   --shadow-y: 12px;
 
@@ -50,6 +59,14 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
+}
+
+/* Reserve the scrollbar gutter so the vertical scrollbar never appears/
+   disappears on resize. Keeps `100vw`/`50vw` (e.g. the full-bleed Travel
+   clothesline) in a constant relationship with the layout width, so resizing
+   no longer reflows the page width and yanks the scroll position. */
+html {
+  scrollbar-gutter: stable;
 }
 
 body {

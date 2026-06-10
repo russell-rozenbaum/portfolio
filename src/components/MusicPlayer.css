@@ -2,28 +2,33 @@
    The device casing (red, sketched)
    ============================================================ */
 .playbox {
-  --fill: var(--case);
+  --fill: var(--computer);
+  --shadow-x: 9px;
+  --shadow-y: 10px;
   color: var(--ink);
   width: min(440px, 100%);
-  padding: 20px 20px 26px;
+  /* chunky CRT bezel: thick all round, taller chin for the buttons */
+  padding: 22px 24px 18px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  transform: rotate(0.4deg);
+  gap: 16px;
+  border-radius: 14px;
+  transform: rotate(0deg);
 }
 
 /* ============================================================
    The LCD screen — green glass set into the casing
    ============================================================ */
 .screen {
-  --fill: var(--lcd);
+  --fill: var(--crt);
   position: relative;
   padding: 4px;
-  border-radius: 5px;
+  border-radius: 11px; /* rounded CRT glass */
   /* inner shadow gives the "recessed glass" feel + a soft outer glow */
   box-shadow:
-    inset 0 0 0 2px rgba(29, 42, 16, 0.25),
-    0 0 22px var(--lcd-glow);
+    inset 0 0 0 2px rgba(29, 42, 16, 0.28),
+    inset 0 0 26px rgba(29, 42, 16, 0.22),
+    0 0 22px var(--crt-glow);
   overflow: hidden;
 }
 .screen::before {
@@ -78,9 +83,9 @@
   font-size: 0.6rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--lcd-ink);
+  color: var(--crt-ink);
   padding: 2px 0 6px;
-  border-bottom: 2px dashed var(--lcd-deep);
+  border-bottom: 2px dashed var(--crt-deep);
 }
 .star {
   font-size: 0.55rem;
@@ -88,18 +93,18 @@
 .screen__link {
   color: inherit;
   text-decoration: none;
-  border-bottom: 2px dotted var(--lcd-deep);
+  border-bottom: 2px dotted var(--crt-deep);
   padding-bottom: 1px;
   transition: color 0.1s steps(2);
 }
 .screen__link:hover,
 .screen__link:focus-visible {
-  color: var(--lcd-dim);
-  border-bottom-color: var(--lcd-ink);
+  color: var(--crt-dim);
+  border-bottom-color: var(--crt-ink);
   outline: none;
 }
 .screen__link:active {
-  color: var(--lcd-deep);
+  color: var(--crt-deep);
 }
 
 /* ============================================================
@@ -108,10 +113,27 @@
 .tracklist {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 4px 0 0; /* room for the scrollbar */
   display: flex;
   flex-direction: column;
   gap: 2px;
+  /* fixed screen height — the list scrolls inside its own window.
+     kept short so the whole screen reads squareish / slightly landscape */
+  max-height: clamp(146px, 22vh, 188px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--crt-deep) transparent;
+}
+.tracklist::-webkit-scrollbar {
+  width: 8px;
+}
+.tracklist::-webkit-scrollbar-thumb {
+  background: var(--crt-deep);
+  border-radius: 1px;
+}
+.tracklist::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .track {
@@ -120,10 +142,10 @@
   display: grid;
   grid-template-columns: 2.6ch 1fr auto;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
   background: transparent;
   border: 0;
-  color: var(--lcd-ink);
+  color: var(--crt-ink);
   text-align: left;
   padding: 7px 8px;
   transition: transform 0.1s steps(2);
@@ -135,7 +157,7 @@
 .track__num {
   font-family: var(--font-pixel);
   font-size: 0.72rem;
-  color: var(--lcd-dim);
+  color: var(--crt-dim);
   line-height: 1;
 }
 
@@ -150,7 +172,7 @@
   font-size: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--lcd-dim);
+  color: var(--crt-dim);
   margin-bottom: 3px;
 }
 .track__name {
@@ -171,35 +193,35 @@
 .track__icon svg {
   width: 13px;
   height: 13px;
-  fill: var(--lcd-ink);
+  fill: var(--crt-ink);
   shape-rendering: crispEdges;
 }
 
 /* active row = inverted LCD cell (dark glass, lit text) */
 .track--active {
-  color: var(--lcd-bright);
+  color: var(--crt-bright);
 }
 .track--active::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--lcd-ink);
-  border: 2px solid var(--lcd-ink);
+  background: var(--crt-ink);
+  border: 2px solid var(--crt-ink);
   border-radius: 2px;
   filter: url(#wobble);
   z-index: -1;
 }
 .track--active .track__num {
-  color: var(--lcd-bright);
+  color: var(--crt-bright);
 }
 .track--active .track__label {
-  color: var(--lcd-deep);
+  color: var(--crt-deep);
 }
 .track--active .track__icon {
   opacity: 1;
 }
 .track--active .track__icon svg {
-  fill: var(--lcd-bright);
+  fill: var(--crt-bright);
 }
 
 /* little equalizer bars on the playing row */
@@ -212,7 +234,7 @@
 .bars i {
   width: 3px;
   height: 100%;
-  background: var(--lcd-bright);
+  background: var(--crt-bright);
   transform-origin: bottom;
   animation: eq 0.8s steps(3) infinite;
 }
@@ -241,12 +263,12 @@
   gap: 5px;
   margin-top: 4px;
   padding: 6px 2px 0;
-  border-top: 2px dashed var(--lcd-deep);
+  border-top: 2px dashed var(--crt-deep);
 }
 .scrub__bar {
   position: relative;
   height: 12px;
-  border: 2px solid var(--lcd-ink);
+  border: 2px solid var(--crt-ink);
   border-radius: 1px;
   cursor: pointer;
   overflow: hidden;
@@ -258,7 +280,7 @@
   left: 0;
   background-image: repeating-linear-gradient(
     90deg,
-    var(--lcd-ink) 0 4px,
+    var(--crt-ink) 0 4px,
     transparent 4px 6px
   );
   transition: width 0.2s steps(8);
@@ -269,7 +291,7 @@
   font-family: var(--font-lcd);
   font-size: 1.1rem;
   line-height: 1;
-  color: var(--lcd-ink);
+  color: var(--crt-ink);
 }
 
 /* ============================================================

@@ -2,6 +2,7 @@ import MusicPlayer from './components/MusicPlayer'
 import AlbumShelf from './components/AlbumShelf'
 import ArtSection from './components/ArtSection'
 import TravelSection from './components/TravelSection'
+import Speaker from './components/Speaker'
 import ProjectsSection from './components/ProjectsSection'
 import PdfDoc from './components/PdfDoc'
 import { useAudioPlayer } from './hooks/useAudioPlayer'
@@ -26,6 +27,7 @@ const MailIcon = () => (
     <path d="M2 4h20a1 1 0 011 1v14a1 1 0 01-1 1H2a1 1 0 01-1-1V5a1 1 0 011-1zm.4 2L12 12l9.6-6H2.4zM3 7.3V18h18V7.3l-9 5.6-9-5.6z" />
   </svg>
 )
+
 
 export default function App() {
   const player = useAudioPlayer(tracks)
@@ -237,16 +239,24 @@ export default function App() {
           <ProjectsSection />
         </section>
 
-        {/* ---- Music: shelf (left) · player (right) ---- */}
+        {/* ---- Music: a retro computer flanked by speakers, albums below ---- */}
         <section id="music" className="section">
           <h2 className="section__title">Music</h2>
-          <div className="music-row">
-            <div className="music-row__shelf">
+          <div className="hifi">
+            <div className="hifi__deck">
+              <Speaker side="left" player={player} />
+              <div className="computer">
+                <MusicPlayer tracks={tracks} player={player} />
+                <div className="computer__stand" aria-hidden="true">
+                  <span className="computer__neck" />
+                  <span className="computer__foot" />
+                </div>
+              </div>
+              <Speaker side="right" player={player} />
+            </div>
+            <div className="hifi__albums">
               <AlbumShelf />
             </div>
-            <aside className="music-row__player" aria-label="Music player">
-              <MusicPlayer tracks={tracks} player={player} />
-            </aside>
           </div>
         </section>
 
