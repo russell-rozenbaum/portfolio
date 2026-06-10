@@ -6,11 +6,10 @@
 .clothesline {
   --line-y: clamp(16px, 2.6vw, 26px);
   --vp-pad-top: 10px;
-  /* safety margin kept between the clothesline and the screen edges */
-  --bleed-margin: clamp(16px, 3vw, 48px);
+  /* full-bleed: run all the way to the window edges (no safety margin) */
+  --bleed-margin: 0px;
   position: relative;
-  /* break out of the centred content column to span the full page width,
-     minus the safety margin on each side */
+  /* break out of the centred content column to span the full window width */
   width: calc(100vw - 2 * var(--bleed-margin));
   margin-left: calc(-50vw + 50% + var(--bleed-margin));
 }
@@ -51,7 +50,7 @@
 .clothesline__track {
   list-style: none;
   margin: 0;
-  padding-inline: clamp(20px, 4vw, 60px); /* a little breathing room at the ends */
+  padding-inline: clamp(8px, 1.5vw, 18px); /* small breathing room at the ends */
   display: flex;
   align-items: flex-start;
   gap: clamp(28px, 4vw, 60px);
