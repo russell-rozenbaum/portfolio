@@ -62,10 +62,12 @@ export default function Speaker({ side, player }: Props) {
       // envelope is eased (smooth ramp), but the offset is re-randomised every
       // frame so it reads as a high-frequency vibration.
       tHi += (high - tHi) * 0.5
-      const amp = tHi * 9 // px of jitter at full highs
+      // Same sensitivity slope as before, but the jitter is capped so loud,
+      // bright tracks don't shake the tweeter excessively.
+      const amp = Math.min(tHi * 9, 1.2) // px ceiling (was uncapped, up to 9px)
       const jx = (Math.random() * 2 - 1) * amp
       const jy = (Math.random() * 2 - 1) * amp
-      const tScale = 1 + tHi * 0.07
+      const tScale = 1 + Math.min(tHi, 0.25) * 0.07
       if (tweetRef.current)
         tweetRef.current.style.transform = `translate(${jx.toFixed(2)}px, ${jy.toFixed(2)}px) scale(${tScale.toFixed(3)})`
       raf = requestAnimationFrame(tick)
