@@ -335,8 +335,8 @@
   max-width: 760px;
 }
 
-/* mobile: monitor on top, the two speakers in a row beneath it (with a gap) */
-@media (max-width: 760px) {
+/* mobile (641–760px): monitor on top, the two speakers in a row beneath it */
+@media (min-width: 641px) and (max-width: 760px) {
   .hifi__deck {
     flex-wrap: wrap;
     gap: clamp(28px, 9vw, 56px);
@@ -349,6 +349,85 @@
     width: clamp(64px, 17vw, 96px);
     height: clamp(150px, 36vw, 200px);
   }
+}
+
+/* ---- mobile (≤640px): bigger/taller MP3 player + reactive wired earbuds ---- */
+.mp3rig {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  /* room above the player for the dangling earbuds */
+  padding-top: clamp(104px, 30vw, 150px);
+}
+.mp3rig__player {
+  width: min(420px, 92vw);
+}
+.mp3rig .playbox {
+  width: 100%;
+}
+/* mobile-only: taller screen so the player reads more vertical.
+   Scoped to .mp3rig — the desktop computer screen is untouched. */
+.mp3rig .tracklist {
+  max-height: clamp(252px, 50vh, 392px);
+}
+
+/* earbuds + cable as a full-rig overlay; cable plugs into the player's bottom */
+.earbuds {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.eb-cable {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  filter: url(#wobble);
+}
+.eb-bud {
+  fill: var(--computer);
+  stroke: var(--ink);
+  stroke-width: 3.2;
+  filter: url(#wobble);
+}
+.eb-tip {
+  fill: var(--cream);
+  stroke: var(--ink);
+  stroke-width: 2.6;
+  filter: url(#wobble);
+}
+/* reactive driver — scales / jitters around its own centre */
+.eb-driver {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+}
+.eb-driver circle {
+  fill: var(--cream);
+  stroke: var(--ink);
+  stroke-width: 2.6;
+  filter: url(#wobble);
+}
+.eb-driver .eb-dot {
+  fill: var(--ink);
+}
+.eb-plug {
+  fill: var(--computer);
+  stroke: var(--ink);
+  stroke-width: 3;
+  filter: url(#wobble);
+}
+.eb-plug-tip {
+  fill: var(--ink);
+  filter: url(#wobble);
+}
+.eb-plug-band {
+  fill: var(--computer);
 }
 
 /* ---- experience / research: header + bullet pairs ---- */
@@ -497,8 +576,11 @@
     align-items: center;
     gap: 12px;
   }
+  /* cap the logo so it doesn't blow up to full width when stacked */
   .xp__logo {
     flex-basis: auto;
+    width: clamp(92px, 30vw, 150px);
+    max-width: 60%;
   }
   .xp__body {
     width: 100%;

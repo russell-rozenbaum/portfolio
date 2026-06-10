@@ -1,0 +1,60 @@
+/* JS-driven custom cursor (see Cursor.tsx).
+   Default: a periwinkle ring around a cloudy whitish-blue dot. On hover they
+   swap places (each keeping its own colour) and grow. */
+.cursor {
+  --c-ring: var(--accent-bright); /* periwinkle (default ring / hover dot) */
+  --c-ocean: #0c2c4a; /* deep ocean blue (default dot / hover ring) */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  will-change: transform;
+}
+.cursor.is-visible {
+  opacity: 1;
+}
+
+/* both can render as a filled dot (background) or an outline ring (border),
+   so each can morph into the other while keeping its own colour */
+.cursor__ring,
+.cursor__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  border: 2.8px solid transparent;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* default: periwinkle ring (outline) around a cloud-blue dot (filled) */
+.cursor__ring {
+  width: 38px;
+  height: 38px;
+  border-color: var(--c-ring);
+}
+.cursor__dot {
+  width: 10px;
+  height: 10px;
+  background: var(--c-ocean);
+}
+
+/* hover: they swap places, each keeping its colour — the cloud dot expands
+   outward into the ring, the periwinkle ring collapses inward into the dot
+   (150% of the default ring size) */
+.cursor.is-hover .cursor__dot {
+  width: 57px;
+  height: 57px;
+  background: transparent;
+  border-color: var(--c-ocean);
+}
+.cursor.is-hover .cursor__ring {
+  width: 10px;
+  height: 10px;
+  background: var(--c-ring);
+  border-color: transparent;
+}

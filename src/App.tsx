@@ -5,7 +5,10 @@ import TravelSection from './components/TravelSection'
 import Speaker from './components/Speaker'
 import ProjectsSection from './components/ProjectsSection'
 import PdfDoc from './components/PdfDoc'
+import Earbuds from './components/Earbuds'
+import Cursor from './components/Cursor'
 import { useAudioPlayer } from './hooks/useAudioPlayer'
+import { useMediaQuery } from './hooks/useMediaQuery'
 import { tracks } from './data/tracks'
 import { docs } from './data/docs'
 import experience from './data/experience.json'
@@ -31,9 +34,13 @@ const MailIcon = () => (
 
 export default function App() {
   const player = useAudioPlayer(tracks)
+  // mobile gets the handheld MP3 player + wired headphones instead of the
+  // desktop computer + tower speakers
+  const isMobile = useMediaQuery('(max-width: 640px)')
 
   return (
     <div className="site">
+      <Cursor />
       {/* ---- forest-green sketched top bar ---- */}
       <nav className="topbar sticker">
         <a
@@ -244,15 +251,26 @@ export default function App() {
           <h2 className="section__title">Music</h2>
           <div className="hifi">
             <div className="hifi__deck">
-              <Speaker side="left" player={player} />
-              <div className="computer">
-                <MusicPlayer tracks={tracks} player={player} />
-                <div className="computer__stand" aria-hidden="true">
-                  <span className="computer__neck" />
-                  <span className="computer__foot" />
+              {isMobile ? (
+                <div className="mp3rig">
+                  <div className="mp3rig__player">
+                    <MusicPlayer tracks={tracks} player={player} />
+                  </div>
+                  <Earbuds player={player} />
                 </div>
-              </div>
-              <Speaker side="right" player={player} />
+              ) : (
+                <>
+                  <Speaker side="left" player={player} />
+                  <div className="computer">
+                    <MusicPlayer tracks={tracks} player={player} />
+                    <div className="computer__stand" aria-hidden="true">
+                      <span className="computer__neck" />
+                      <span className="computer__foot" />
+                    </div>
+                  </div>
+                  <Speaker side="right" player={player} />
+                </>
+              )}
             </div>
             <div className="hifi__albums">
               <AlbumShelf />

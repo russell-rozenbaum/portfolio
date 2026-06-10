@@ -11,9 +11,9 @@
   --red-deep: #b63a26;
   --red-ink: #2a0f08;
 
-  /* --- accent: blue, matched to the LCD theme --- */
-  --accent: #3a7ba1;
-  --accent-bright: #5aa0c6;
+  /* --- accent: deep periwinkle-blue with a slight purple lean --- */
+  --accent: #4a5aa3;
+  --accent-bright: #6c7cc4;
 
   --forest: #34603f;      /* top bar — sketched forest green */
   --forest-deep: #244430;
@@ -52,6 +52,14 @@
 
 * {
   box-sizing: border-box;
+}
+
+/* A JS-driven custom cursor (Cursor.tsx) draws the pointer on mouse devices,
+   so hide the native cursor everywhere for fine pointers (touch keeps none). */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
 }
 
 html,
@@ -95,8 +103,8 @@ body::after {
 }
 
 ::selection {
-  /* light, translucent take on the thematic blue (--accent: #3a7ba1) */
-  background: rgba(58, 123, 161, 0.28);
+  /* light, translucent take on the thematic blue (--accent: #4a5aa3) */
+  background: rgba(74, 90, 163, 0.28);
   color: var(--ink);
 }
 
