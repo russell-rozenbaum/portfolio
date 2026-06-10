@@ -102,10 +102,10 @@ export default function App() {
             <div className="overview__bio">
               <p>
                 Hey! I'm Russell. I'm currently an{' '}
-                <a href="#work">AI Engineer at Ford Motor Company</a> and
+                <a href="#work">AI Engineer at Ford Motor Company</a> and am
                 building my own <a href="#projects">iOS app</a> on the side. I
-                also always find time to make a few{' '}
-                <a href="#music">beats</a>. And every now and then, I pursue{' '}
+                also always find time to produce{' '}
+                <a href="#music">music</a>. And every now and then, I pursue{' '}
                 <a href="#research">research</a>,{' '}
                 <a href="#paintings">oil paint</a>, and{' '}
                 <a href="#travel">travel</a>.
