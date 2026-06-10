@@ -10,16 +10,19 @@
     "images": ["DSC01298.jpg", "DSC01313.jpg", "DSC01335.JPEG"]
   },
   {
-    "location": "Berner Oberland, Switzerland",
+    "location": "Spiez, Switzerland",
     "date": "February 2026",
     "images": [
       "DSC01370_raw.JPEG",
       "DSC01467.jpg",
       "DSC01425.jpg",
-      "DSC01438.jpg",
-      "DSC01552_raw.jpg",
-      "DSC01559_raw.jpg"
+      "DSC01438.jpg"
     ]
+  },
+  {
+    "location": "Berner Oberland, Switzerland",
+    "date": "February 2026",
+    "images": ["DSC01552_raw.jpg", "DSC01559_raw.jpg"]
   },
   {
     "location": "Zürich, Switzerland",

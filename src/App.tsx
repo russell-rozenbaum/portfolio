@@ -5,7 +5,6 @@ import TravelSection from './components/TravelSection'
 import Speaker from './components/Speaker'
 import ProjectsSection from './components/ProjectsSection'
 import PdfDoc from './components/PdfDoc'
-import Earbuds from './components/Earbuds'
 import Cursor from './components/Cursor'
 import { useAudioPlayer } from './hooks/useAudioPlayer'
 import { useMediaQuery } from './hooks/useMediaQuery'
@@ -256,7 +255,6 @@ export default function App() {
                   <div className="mp3rig__player">
                     <MusicPlayer tracks={tracks} player={player} />
                   </div>
-                  <Earbuds player={player} />
                 </div>
               ) : (
                 <>
