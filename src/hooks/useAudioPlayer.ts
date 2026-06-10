@@ -54,7 +54,7 @@ export function useAudioPlayer(tracks: Track[]): AudioPlayer {
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [hasStarted, setHasStarted] = useState(false)
-  const [shuffle, setShuffle] = useState(true) // on by default
+  const [shuffle, setShuffle] = useState(false) // off — prev/next go in order
   const [volumes, setVolumes] = useState({ left: 1, right: 1 })
   const volumesRef = useRef(volumes)
   volumesRef.current = volumes
@@ -200,9 +200,9 @@ export function useAudioPlayer(tracks: Track[]): AudioPlayer {
 
   const prev = useCallback(() => {
     setHasStarted(true)
-    // If we're more than 3s in, restart the track instead of skipping back.
+    // If we're more than 4s in, restart the track instead of skipping back.
     const audio = audioRef.current!
-    if (audio.currentTime > 3) {
+    if (audio.currentTime > 4) {
       audio.currentTime = 0
       return
     }

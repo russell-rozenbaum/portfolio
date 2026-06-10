@@ -107,8 +107,8 @@ export default function App() {
                 also always find time to produce{' '}
                 <a href="#music">music</a>. And every now and then, I pursue{' '}
                 <a href="#research">research</a>,{' '}
-                <a href="#paintings">oil paint</a>, and{' '}
-                <a href="#travel">travel</a>.
+                <a href="#paintings">oil painting</a>, and{' '}
+                <a href="#travel">travelling</a>.
               </p>
             </div>
           </div>
