@@ -38,8 +38,9 @@ export default function App() {
   const isMobile = useMediaQuery('(max-width: 640px)')
 
   return (
-    <div className="site">
-      <Cursor />
+    <>
+      <div className="site">
+        <Cursor />
       {/* ---- forest-green sketched top bar ---- */}
       <nav className="topbar sticker">
         <a
@@ -288,10 +289,11 @@ export default function App() {
           <TravelSection />
         </section>
       </main>
+      </div>
 
-      {/* ---- footer: mirrors the top bar ---- */}
+      {/* ---- footer: full-bleed, mirrors the top bar ---- */}
       <footer className="footer">
-        <div className="footer__bar sticker">
+        <div className="footer__bar">
           <span className="footer__copy">© 2026 Russell Rozenbaum</span>
           <div className="topbar__links">
             <a
@@ -331,6 +333,6 @@ export default function App() {
           </div>
         </div>
       </footer>
-    </div>
+    </>
   )
 }

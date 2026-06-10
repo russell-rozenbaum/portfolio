@@ -40,6 +40,7 @@
   max-width: 1180px;
   margin: 0 auto;
   padding: clamp(18px, 3vw, 40px);
+  padding-bottom: 0; /* footer (a full-bleed sibling) provides the bottom gap */
   display: flex;
   flex-direction: column;
   gap: clamp(30px, 5vw, 64px);
@@ -92,25 +93,34 @@
   fill: currentColor;
 }
 
-/* ---- footer: mirrors the top bar ---- */
+/* ---- footer: full-bleed band, mirrors the top bar ---- */
 .footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+  width: 100%;
+  margin-top: clamp(18px, 2.5vw, 30px);
 }
 .footer__bar {
-  --fill: var(--accent);
-  --shadow-x: 7px;
-  --shadow-y: 8px;
+  position: relative;
   width: 100%;
+  background: var(--accent);
   color: var(--cream);
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px 22px;
-  padding: 14px clamp(16px, 2.5vw, 28px);
+  /* full-bleed L/R/bottom; content padded in from the screen edges */
+  padding: 18px clamp(20px, 5vw, 64px);
+}
+/* hand-drawn inked top edge (wobbly), no side/bottom borders so it bleeds off */
+.footer__bar::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: 0;
+  height: 3px;
+  background: var(--ink);
+  filter: url(#wobble);
 }
 .footer__copy {
   font-family: var(--font-pixel);
