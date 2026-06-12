@@ -31,6 +31,12 @@ const MailIcon = () => (
 )
 
 
+// Toggle for the JS-driven custom cursor. Disabled for now so the native OS
+// cursor shows in production; flip to `true` to bring the custom cursor back.
+// (Component + CSS are intentionally kept in the codebase — see Cursor.tsx and
+// the commented `cursor: none` rule in index.css.)
+const SHOW_CUSTOM_CURSOR = false
+
 export default function App() {
   const player = useAudioPlayer(tracks)
   // mobile gets the handheld MP3 player + wired headphones instead of the
@@ -40,7 +46,7 @@ export default function App() {
   return (
     <>
       <div className="site">
-        <Cursor />
+        {SHOW_CUSTOM_CURSOR && <Cursor />}
       {/* ---- forest-green sketched top bar ---- */}
       <nav className="topbar sticker">
         <a

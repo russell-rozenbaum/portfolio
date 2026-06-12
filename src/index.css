@@ -55,12 +55,17 @@
 }
 
 /* A JS-driven custom cursor (Cursor.tsx) draws the pointer on mouse devices,
-   so hide the native cursor everywhere for fine pointers (touch keeps none). */
+   so hide the native cursor everywhere for fine pointers (touch keeps none).
+   DISABLED: the custom cursor is currently turned off (SHOW_CUSTOM_CURSOR in
+   App.tsx), so we let the native OS cursor show. Re-enable this block together
+   with the flag to bring the custom cursor back. */
+/*
 @media (pointer: fine) {
   * {
     cursor: none !important;
   }
 }
+*/
 
 html,
 body {
